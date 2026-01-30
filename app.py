@@ -30,7 +30,18 @@ def predict_price(
     prediction = model.predict(features)[0]
 
     return {
-        "predicted_house_price": round(prediction, 2)
+        "input_features": {
+            "MedInc": MedInc,
+            "HouseAge": HouseAge,
+            "AveRooms": AveRooms,
+            "AveBedrms": AveBedrms,
+            "Population": Population,
+            "AveOccup": AveOccup,
+            "Latitude": Latitude,
+            "Longitude": Longitude
+        },
+        "predicted_house_price": round(prediction, 2),
+        "message": "Price prediction successful"
     }
 import os
 
