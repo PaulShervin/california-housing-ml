@@ -1,8 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import joblib
 import numpy as np
 
 app = FastAPI(title="California Housing Price Predictor")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:55001", "http://localhost:3000"],  # Add frontend origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load model
 model = joblib.load("california_model.pkl")
@@ -11,7 +21,7 @@ model = joblib.load("california_model.pkl")
 def home():
     return {"message": "California Housing Model API is running"}
 
-@app.post("/predict")
+@app.get("/predict")
 def predict_price(
     MedInc: float,
     HouseAge: float,
